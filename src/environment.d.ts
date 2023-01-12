@@ -30,7 +30,20 @@ export default interface BaseEnvironment {
     args: string[],
     options?: GeneratorBaseOptions & GeneratorType['options'],
   ): Promise<GeneratorType>;
+
+  /**
+   * Gets the version of this `Environment` object.
+   */
   getVersion(): string;
+
+  /**
+   * Gets the version of the specified `dependency`.
+   *
+   * @param dependency The name of the dependency.
+   */
+  // eslint-disable-next-line @typescript-eslint/unified-signatures
+  getVersion(dependency: string): string;
+
   queueGenerator<GeneratorType extends Generator = Generator>(generator: GeneratorType, schedule?: boolean): GeneratorType;
   runGenerator(generator: Generator): Promise<void>;
 }
