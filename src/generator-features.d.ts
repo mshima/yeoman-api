@@ -1,7 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/ban-types
-export type GeneratorCustomFeatures = {};
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
+export type GeneratorCustomFeatures = unknown;
 
-export default interface BaseGeneratorFeatures {
+export type GeneratorBaseFeatures = {
   uniqueBy?: string;
   uniqueGlobally?: boolean;
-}
+};
