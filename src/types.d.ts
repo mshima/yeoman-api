@@ -3,6 +3,7 @@ export * from './index.d.js';
 export * from './adapter.js';
 export * from './logger.js';
 
+export * from './environment.js';
 export type { default as BaseEnvironment } from './environment.js';
 export type { default as BaseGenerator } from './generator.js';
 export type { default as BaseGenerator6 } from './generator6.js';
