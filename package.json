@@ -58,9 +58,7 @@
     "xo": "^0.53.1"
   },
   "peerDependencies": {
-    "@types/diff": "^5.0.2",
     "@types/inquirer": "^9.0.3",
-    "@types/node": "^16.18.11",
     "mem-fs": "^2.2.1"
   },
   "peerDependenciesMeta": {

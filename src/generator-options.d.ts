@@ -3,13 +3,15 @@ import type Environment from './environment.js';
 
 export type GeneratorCustomOptions = Record<string, unknown>;
 
-export type GeneratorBaseOptions = unknown;
+export type GeneratorBaseOptions = {
+  skipInstall?: boolean;
+};
 
 type GeneratorNamespace = {
   namespace: string;
 };
 
-export type GeneratorEnvironmentOptions = GeneratorNamespace & {
+type GeneratorEnvironmentOptions = {
   help?: boolean;
 
   /** Environment being to run */
@@ -19,6 +21,9 @@ export type GeneratorEnvironmentOptions = GeneratorNamespace & {
   resolved: string;
 };
 
-export type GeneratorHelpOptions = GeneratorNamespace & {
+type GeneratorHelpOptions = {
   help: true;
 };
+
+export type GeneratorConstructorBaseOptions = GeneratorNamespace &
+  (Partial<GeneratorEnvironmentOptions> | (GeneratorEnvironmentOptions & GeneratorHelpOptions));

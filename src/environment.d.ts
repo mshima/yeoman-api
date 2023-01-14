@@ -1,22 +1,23 @@
 import { type Transform } from 'node:stream';
 import { type Store } from 'mem-fs';
 
-import { type GeneratorNewArg } from './generator-factory.js';
-import type GeneratorBaseOptions from './generator-options.js';
+import { type BaseGeneratorConstructor } from './generator-factory.js';
 import type Generator from './generator.js';
 import { type GeneratorBaseDefinition } from './generator-definitions.js';
-import { type TerminalAdapter } from './adapter.js';
+import { type InputOutputAdapter } from './adapter.js';
 
 export interface GroupedQueue {
   queueNames: string[];
-  add(queueName: string, task: (continueCallback: () => void) => void, options: { once?: string; run?: boolean });
+  add(queueName: string, task: (continueCallback: () => void, stop: (error) => void) => any, options: { once?: string; run?: boolean });
   addSubQueue(queueName: string, before?: string);
+  on(eventName: 'start' | 'end', callback: (...args: any[]) => any): boolean;
+  on(eventName: 'error', callback: (error: unknown) => any): boolean;
 }
 
 export default interface BaseEnvironment {
   cwd: string;
   runLoop: GroupedQueue;
-  adapter: TerminalAdapter;
+  adapter: InputOutputAdapter;
   sharedFs: Store;
 
   emit(eventName: string | symbol, ...args: any[]): boolean;
@@ -26,7 +27,7 @@ export default interface BaseEnvironment {
     GeneratorType extends Generator<Definition> = Generator<Definition>,
     Definition extends GeneratorBaseDefinition = GeneratorBaseDefinition,
   >(
-    namespaceOrPath: string | GeneratorNewArg<GeneratorType>,
+    namespaceOrPath: string | BaseGeneratorConstructor<GeneratorType>,
     args: string[],
     options?: Definition['options'],
   ): Promise<GeneratorType>;
@@ -34,7 +35,7 @@ export default interface BaseEnvironment {
     GeneratorType extends Generator<Definition> = Generator<Definition>,
     Definition extends GeneratorBaseDefinition = GeneratorBaseDefinition,
   >(
-    generator: GeneratorNewArg<GeneratorType>,
+    generator: BaseGeneratorConstructor<GeneratorType>,
     args: string[],
     options?: Definition['options'],
   ): Promise<GeneratorType>;
@@ -60,7 +61,7 @@ export default interface BaseEnvironment {
   // eslint-disable-next-line @typescript-eslint/unified-signatures
   getVersion(dependency: string): string;
 
-  queueGenerator<GeneratorType extends Generator = Generator>(generator: GeneratorType, schedule?: boolean): GeneratorType;
+  queueGenerator<GeneratorType extends Generator = Generator>(generator: GeneratorType, schedule?: boolean): Promise<GeneratorType>;
 
   /**
    * Resolves a package name with a specific version.
@@ -69,6 +70,8 @@ export default interface BaseEnvironment {
    * @param packageVersion The version or the version range of the package to resolve.
    */
   resolvePackage(packageName: string, packageVersion?: string): Promise<[string, string]>;
+
+  rootGenerator<GeneratorType extends Generator = Generator>(): GeneratorType;
 
   runGenerator(generator: Generator): Promise<void>;
 }

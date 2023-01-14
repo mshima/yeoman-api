@@ -1,7 +1,8 @@
 import { type GeneratorBaseDefinition } from './generator-definitions.js';
-import type BaseGenerator from './generator.js';
+import { type BaseGeneratorConstructorFeatures } from './generator-factory.js';
+import { type BaseGeneratorWithFeatures } from './generator.js';
 
-export default interface BaseGenerator6<Definition extends GeneratorBaseDefinition = GeneratorBaseDefinition> extends BaseGenerator {
-  readonly options: Definition['options'];
-  get features(): Definition['features'];
+export default interface BaseGenerator6<Definition extends GeneratorBaseDefinition = GeneratorBaseDefinition>
+  extends BaseGeneratorWithFeatures<Definition> {
+  queueTasks(): Promise<void>;
 }

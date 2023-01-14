@@ -8,12 +8,6 @@ import {
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type GeneratorBaseDefinition<OptionsDefinition = GeneratorCustomOptions, FeaturesDefinition = GeneratorCustomFeatures> = {
-  constructor: Partial<GeneratorEnvironmentOptions> &
-    (GeneratorEnvironmentOptions | GeneratorHelpOptions) &
-    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-    GeneratorBaseOptions &
-    OptionsDefinition;
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   options: GeneratorBaseOptions & OptionsDefinition;
   features: GeneratorBaseFeatures & FeaturesDefinition;
 };

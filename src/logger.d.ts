@@ -27,7 +27,7 @@ export type Logger<TCategories extends string | number | symbol = DefaultLoggerC
   /**
    * Writes a log-message.
    */
-  (...args: Parameters<Console['error']>): Logger<TCategories>;
+  (message?: any, ...optionalParameters: any[]): Logger<TCategories>;
 
   /**
    * Writes a log-message.
