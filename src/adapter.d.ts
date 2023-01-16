@@ -20,6 +20,11 @@ export interface InputOutputAdapter {
   log: Logger;
 
   /**
+   * Close underline inputs.
+   */
+  close?(): void;
+
+  /**
    * Prompts the user for one or more questions.
    *
    * @param questions The questions to prompt.
