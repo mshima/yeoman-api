@@ -6,18 +6,20 @@ import { type GetGeneratorDefinition, type BaseGeneratorWithFeatures } from './g
 export type GeneratorConstructorOptions<GeneratorDefinition extends GeneratorBaseDefinition = GeneratorBaseDefinition> =
   GeneratorConstructorBaseOptions & GeneratorDefinition['options'];
 
-export type BaseGeneratorConstructor<GeneratorType extends BaseGenerator = BaseGeneratorWithFeatures> =
-  GeneratorType extends BaseGeneratorWithFeatures
-    ? BaseGeneratorConstructorFeatures<GeneratorType>
-    : BaseGeneratorConstructorArg<GeneratorType>;
-
-export type BaseGeneratorConstructorArg<GeneratorType extends BaseGenerator = BaseGenerator> = new (
-  args: string[],
-  options: GeneratorConstructorOptions<GetGeneratorDefinition<GeneratorType>['options']>,
-) => GeneratorType;
-
-export type BaseGeneratorConstructorFeatures<GeneratorType extends BaseGeneratorWithFeatures = BaseGeneratorWithFeatures> = new (
+export type BaseGeneratorConstructor<GeneratorType extends BaseGenerator = BaseGenerator> = new (
   args: string[],
   options: GeneratorConstructorOptions<GetGeneratorDefinition<GeneratorType>['options']>,
   features: GetGeneratorDefinition<GeneratorType>['features'],
 ) => GeneratorType;
+
+export type BaseGeneratorBuilder<GeneratorType extends BaseGenerator = BaseGenerator> = (
+  ...args: ConstructorParameters<BaseGeneratorConstructor<GeneratorType>>
+) => Promise<GeneratorType>;
+
+export type BaseGeneratorFactory<GeneratorType extends BaseGenerator = BaseGenerator> =
+  | BaseGeneratorConstructor<GeneratorType>
+  | BaseGeneratorBuilder<GeneratorType>;
+
+export type BaseGeneratorFactoryType<T extends BaseGeneratorFactory> = T extends new (...args: any) => any
+  ? InstanceType<T>
+  : Awaited<ReturnType<T>>;

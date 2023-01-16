@@ -1,10 +1,43 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import type Environment from './environment.js';
 
 export type GeneratorCustomOptions = Record<string, unknown>;
 
 export type GeneratorBaseOptions = {
+  /**
+   * Skip package manager install task.
+   */
   skipInstall?: boolean;
+
+  /**
+   * Fail on package manager install task failure.
+   */
+  forceInstall?: boolean;
+
+  /**
+   * Skip working dir cacheable prompts cache.
+   */
+  skipCache?: boolean;
+
+  /**
+   * Skip working dir cacheable prompts cache.
+   */
+  skipLocalCache?: boolean;
+
+  /**
+   * Skip options parsing.
+   * Options is already parsed.
+   */
+  skipParseOptions?: boolean;
+
+  /**
+   * Store global storage at working dir.
+   */
+  localConfigOnly?: boolean;
+
+  /**
+   * Show prompts for already answered questions.
+   */
+  askAnswered?: boolean;
 };
 
 type GeneratorNamespace = {

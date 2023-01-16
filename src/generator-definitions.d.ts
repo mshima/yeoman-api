@@ -6,7 +6,6 @@ import {
   type GeneratorCustomOptions,
 } from './generator-options.js';
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 export type GeneratorBaseDefinition<OptionsDefinition = GeneratorCustomOptions, FeaturesDefinition = GeneratorCustomFeatures> = {
   options: GeneratorBaseOptions & OptionsDefinition;
   features: GeneratorBaseFeatures & FeaturesDefinition;
