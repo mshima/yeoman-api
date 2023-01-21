@@ -8,9 +8,6 @@ export type { default as BaseEnvironment } from './environment.js';
 export * from './generator.js';
 export type { default as BaseGenerator } from './generator.js';
 
-export * from './generator6.js';
-export type { default as BaseGenerator6 } from './generator6.js';
-
 export * from './generator-definitions.js';
 export * from './generator-factory.js';
 export * from './generator-features.js';
